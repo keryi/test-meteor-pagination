@@ -3,12 +3,41 @@
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
-
-  {{> hello}}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        {{> persons}}
+      </div>
+    </div>
+  </div>
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name='persons'>
+  <a href="#" id="go_next">Next</a>
+  <a href="#" id="go_previous">Prev</a>
+  <table class="table">
+    <thead>
+      <th>
+        Name
+      </th>
+      <th>
+        Score
+      </th>
+    </thead>
+    {{#each persons}}
+      {{> person}}
+    {{/each}}
+  </table>
+  {{> paginate pagination=pagination}}
+</template>
+
+<template name='person'>
+  <tr>
+    <td>
+      {{name}}
+    </td>
+    <td>
+      {{score}}
+    </td>
+  </tr>
 </template>

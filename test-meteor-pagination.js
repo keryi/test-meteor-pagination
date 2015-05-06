@@ -1,23 +1,27 @@
 if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault('counter', 0);
+  Template.persons.helpers({
+    persons: function() {
+      return personsPagination.currentPage();
+    },
 
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
+    hasNext: function() {
+      return personsPagination.hasNext();
+    },
+
+    pagination: function() {
+      return personsPagination;
     }
   });
 
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
-    }
-  });
-}
+  Template.persons.events({
+    'click #go_next': function(e) {
+      if (personsPagination.hasNext())
+        personsPagination.goNext();
+    },
 
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
-  });
+    'click #go_previous': function(e) {
+      if (personsPagination.hasPrevious())
+        personsPagination.goPrevious();
+    }
+  })
 }
